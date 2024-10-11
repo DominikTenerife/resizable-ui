@@ -1,94 +1,65 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(251, 253, 252);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent any potential horizontal scrollbars */
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
-  margin: 0;
+  background-color: transparent; /* Prevent body background color affecting the layout */
+}
+
+.site-wrapper {
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  flex-direction: column;
+  width: 100%;    /* Ensures full width */
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
   height: 70px;
   display: flex;
   gap: 2rem;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 0;
   color: white;
   background-color: #021130;
-  position: fixed;
-  top: 0;
-  left:0;
-  right: 0;
-  z-index: +1;
- }
-
-nav {
-  display: flex;
-  
-  margin:0;
+  width: 100%;
 }
 
-header a {
-  text-decoration: none;
-  color:white;
-  font-weight: 600;
-  padding: 5px 20px;
-}
-
-header a:hover {
-  color:lightblue;
-  text-decoration: underline;
-  text-decoration-color: blue;
-  text-decoration-thickness: 5px;
-  
+main {
+  width: 100%;
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 footer {
@@ -96,57 +67,14 @@ footer {
   color: white;
   height: 74px;
   display: flex;
-  flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  margin-top: auto;
-  font-weight: 500;
-  width:100vw;
+  width: 100%;
 }
 
-/* Main container taking 100vw */
-.container-main {
-  background-color: #15195a;
-  display: flex;
-  width: 100vw;
-  height: 100vh; /* Full height */
+/* This will explicitly force no unintended padding or margin */
+.container {
+  width: 100%;
   margin: 0;
   padding: 0;
-}
-
-/* First container with initial 25% width */
-.container1 {
-  background-color: #ff9999;
-  width: 25%;
-  height: 100%;
-  padding: 10px;
-}
-
-/* Second container with initial 25% width */
-.container2 {
-  background-color: #99ccff;
-  width: 25%;
-  height: 100%;
-  padding: 10px;
-}
-
-/* Third container with initial 50% width */
-.container3 {
-  background-color: #99ff99;
-  width: 50%;
-  height: 100%;
-  padding: 10px;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
