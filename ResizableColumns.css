@@ -1,0 +1,44 @@
+/* Main container taking 100vw */
+.container-main {
+    display: flex;
+    width: 100vw;
+    height: 100vh; /* Full height */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* First container with initial 25% width */
+  .container1 {
+    background-color: #ff9999;
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  /* Second container with initial 25% width */
+  .container2 {
+    background-color: #99ccff;
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  /* Third container should take the remaining width */
+  .container3 {
+    background-color: #99ff99;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  /* Add some basic styling for resizable handles */
+  .ui-resizable-e {
+    width: 10px;
+    cursor: ew-resize;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
