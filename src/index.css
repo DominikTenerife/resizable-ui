@@ -104,6 +104,40 @@ footer {
   width:100vw;
 }
 
+/* Main container taking 100vw */
+.container-main {
+  background-color: #15195a;
+  display: flex;
+  width: 100vw;
+  height: 100vh; /* Full height */
+  margin: 0;
+  padding: 0;
+}
+
+/* First container with initial 25% width */
+.container1 {
+  background-color: #ff9999;
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+}
+
+/* Second container with initial 25% width */
+.container2 {
+  background-color: #99ccff;
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+}
+
+/* Third container with initial 50% width */
+.container3 {
+  background-color: #99ff99;
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
