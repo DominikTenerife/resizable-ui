@@ -1,56 +1,100 @@
+/* ResizableColumns.css */
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    box-sizing: border-box; /* Ensure padding and borders are included in width */
-  }
-  
-  /* Main container taking full width and height */
-  .container-main {
-    display: flex;
-    width: 100vw;
-    height: 100vh; /* Full height */
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Include padding and borders in width calculation */
-    overflow: hidden; /* Avoid any potential overflow issues */
-  }
-  
-  /* First container with initial 25% width */
-  .container1 {
-    background-color: #ff9999;
-    width: 25%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  /* Second container with initial 25% width */
-  .container2 {
-    background-color: #99ccff;
-    width: 25%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  /* Third container should take the remaining width */
-  .container3 {
-    background-color: #99ff99;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  
-  /* Add some basic styling for resizable handles */
-  .ui-resizable-e {
-    width: 10px;
-    cursor: ew-resize;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Main container takes full width and height */
+.container-main {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* First container (Chapters list) */
+.container1 {
+  background-color: #ff9999;
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.container1 h3 {
+  margin-top: 0;
+}
+
+.container1 ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.container1 li {
+  padding: 5px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.container1 li:hover {
+  background-color: #ffcccc;
+}
+
+/* Second container (Search form) */
+.container2 {
+  background-color: #99ccff;
+  width: 25%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.container2 h3 {
+  margin-top: 0;
+}
+
+.container2 form label {
+  display: block;
+  margin-top: 10px;
+}
+
+.container2 form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+/* Third container (Chapter content) */
+.container3 {
+  background-color: #99ff99;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.container3 h3, .container3 h4 {
+  margin-top: 0;
+}
+
+/* Resizable handles styling */
+.ui-resizable-e {
+  width: 10px;
+  cursor: ew-resize;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
   
