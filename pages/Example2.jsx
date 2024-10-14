@@ -3,8 +3,9 @@ import '../ResizableColumns.css';
 import { chapters, chapterContents } from '../content/ChaptersContent';
 
 export default function Example2() {
-    
     const [selectedChapter, setSelectedChapter] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const setInitialWidths = () => {
@@ -21,6 +22,9 @@ export default function Example2() {
         if (typeof window.$.fn.resizable === 'function') {
             window.$('.container1').resizable({
                 handles: 'e',
+                animate: true,
+                animateDuration: 'fast',
+                animateEasing: 'swing',
                 resize: function (event, ui) {
                     const container1Width = ui.size.width;
                     const container2Width = window.$('.container2').width();
@@ -31,6 +35,9 @@ export default function Example2() {
 
             window.$('.container2').resizable({
                 handles: 'e',
+                animate: true,
+                animateDuration: 'fast',
+                animateEasing: 'swing',
                 resize: function (event, ui) {
                     const container1Width = window.$('.container1').width();
                     const container2Width = ui.size.width;
@@ -53,6 +60,35 @@ export default function Example2() {
         setSelectedChapter(chapter);
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+
+        // Hardcoded mock search results
+        const mockResults = [
+            {
+                title: 'Example Search Result 1',
+                url: 'https://www.example.com/1',
+                snippet: 'This is a description for the first example search result.',
+            },
+            {
+                title: 'Example Search Result 2',
+                url: 'https://www.example.com/2',
+                snippet: 'This is a description for the second example search result.',
+            },
+            {
+                title: 'Example Search Result 3',
+                url: 'https://www.example.com/3',
+                snippet: 'This is a description for the third example search result.',
+            },
+        ];
+
+        setSearchResults(mockResults);
+    };
+
     return (
         <div className="container-main">
             <div className="container1">
@@ -66,16 +102,37 @@ export default function Example2() {
                 </ul>
             </div>
             <div className="container2">
-                <h3>Search Form</h3>
-                <form>
+                <h3>Internet Search</h3>
+                <form onSubmit={handleSearchSubmit}>
                     <label htmlFor="search">Search:</label>
-                    <input type="text" id="search" name="search" placeholder="Search..." />
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        placeholder="Search the web..."
+                    />
                     <br />
-                    <label htmlFor="filter">Filter:</label>
-                    <input type="text" id="filter" name="filter" placeholder="Filter..." />
-                    <br />
-                    <button type="submit">Submit</button>
+                    <button type="submit">Search</button>
                 </form>
+                <div className="search-results">
+                    <h4>Search Results</h4>
+                    {searchResults.length > 0 ? (
+                        <ul>
+                            {searchResults.map((result, index) => (
+                                <li key={index}>
+                                    <a href={result.url} target="_blank" rel="noopener noreferrer">
+                                        {result.title}
+                                    </a>
+                                    <p>{result.snippet}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No results found. Try searching for something else.</p>
+                    )}
+                </div>
             </div>
             <div className="container3">
                 <div className="framed-content">

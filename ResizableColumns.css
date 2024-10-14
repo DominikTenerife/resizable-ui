@@ -149,4 +149,22 @@ html, body {
   color: #333;
 }
 
+
+ /* Media query for tablets (768px to 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .container1, .container2, .container3 {
+    width: 33.33%; /* Make each container equal width on tablets */
+    min-width: 150px; /* Adjust the minimum width for smaller screens */
+  }
+
+  .container3 {
+    padding: 30px; /* Reduce padding for better content display */
+  }
+
+  .framed-content {
+    border: 10px solid gray; /* Reduce border thickness for tablets */
+    padding: 15px;
+  }
+} 
+
   
