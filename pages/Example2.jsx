@@ -4,6 +4,7 @@ import { chapters, chapterContents } from '../content/ChaptersContent';
 
 export default function Example2() {
     const [selectedChapter, setSelectedChapter] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const setInitialWidths = () => {
@@ -95,6 +96,17 @@ export default function Example2() {
         setSelectedChapter(chapter);
     };
 
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        // Mock search results for demonstration purposes
+        setSearchResults([
+            { title: 'Mock Result 1', url: 'https://example.com/1', description: 'This is a description for mock result 1.' },
+            { title: 'Mock Result 2', url: 'https://example.com/2', description: 'This is a description for mock result 2.' },
+            { title: 'Mock Result 3', url: 'https://example.com/3', description: 'This is a description for mock result 3.' }
+        ]);
+    };
+;
+
     return (
         <div className="container-main">
             <div className="container1">
@@ -109,15 +121,27 @@ export default function Example2() {
             </div>
             <div className="container2">
                 <h3>Search Form</h3>
-                <form>
+                <form onSubmit={handleSearchSubmit}>
                     <label htmlFor="search">Search:</label>
                     <input type="text" id="search" name="search" placeholder="Search..." />
                     <br />
-                    <label htmlFor="filter">Filter:</label>
-                    <input type="text" id="filter" name="filter" placeholder="Filter..." />
+                   
                     <br />
                     <button type="submit">Submit</button>
                 </form>
+                {searchResults.length > 0 && (
+                    <div className="search-results">
+                        <h4>Search Results:</h4>
+                        <ul>
+                            {searchResults.map((result, index) => (
+                                <li key={index}>
+                                    <a href={result.url} target="_blank" rel="noopener noreferrer">{result.title}</a>
+                                    <p>{result.description}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </div>
             <div className="container3">
                 <h3>Chapter Content</h3>
