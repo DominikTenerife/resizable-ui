@@ -4,8 +4,6 @@ import { chapters, chapterContents } from '../content/ChaptersContent';
 
 export default function Example1() {
     const [selectedChapter, setSelectedChapter] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const setInitialWidths = () => {
@@ -15,6 +13,28 @@ export default function Example1() {
             const remainingWidth = totalWidth - container1Width - container2Width;
 
             window.$('.container3').width(remainingWidth);
+        };
+
+        const handleTouchResize = (container, event) => {
+            let startX = event.touches[0].clientX;
+            const initialWidth = window.$(container).width();
+
+            const onTouchMove = (e) => {
+                const currentX = e.touches[0].clientX;
+                const delta = currentX - startX;
+                const newWidth = initialWidth + delta;
+
+                window.$(container).width(newWidth);
+                setInitialWidths();
+            };
+
+            const onTouchEnd = () => {
+                window.removeEventListener('touchmove', onTouchMove);
+                window.removeEventListener('touchend', onTouchEnd);
+            };
+
+            window.addEventListener('touchmove', onTouchMove);
+            window.addEventListener('touchend', onTouchEnd);
         };
 
         setInitialWidths();
@@ -43,44 +63,34 @@ export default function Example1() {
             console.error('jQuery UI resizable is not available.');
         }
 
+        // Adding touch event listeners for resizing
+        window.$('.container1').on('touchstart', (e) => handleTouchResize('.container1', e));
+        window.$('.container2').on('touchstart', (e) => handleTouchResize('.container2', e));
+
         window.addEventListener('resize', setInitialWidths);
 
         return () => {
             window.removeEventListener('resize', setInitialWidths);
+            window.$('.container1').off('touchstart');
+            window.$('.container2').off('touchstart');
         };
     }, []);
 
+    const chapters = [
+        'Chapter 1: Introduction',
+        'Chapter 2: Getting Started',
+        'Chapter 3: Advanced Topics',
+        'Chapter 4: Conclusion',
+        'Chapter 5: Additional Topics',
+        'Chapter 6: Best Practices',
+        'Chapter 7: Troubleshooting',
+        'Chapter 8: Case Studies',
+        'Chapter 9: Further Reading',
+        'Chapter 10: Final Thoughts'
+    ];
+
     const handleChapterClick = (chapter) => {
         setSelectedChapter(chapter);
-    };
-
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-
-        // Hardcoded mock search results
-        const mockResults = [
-            {
-                title: 'Example Search Result 1',
-                url: 'https://www.example.com/1',
-                snippet: 'This is a description for the first example search result.',
-            },
-            {
-                title: 'Example Search Result 2',
-                url: 'https://www.example.com/2',
-                snippet: 'This is a description for the second example search result.',
-            },
-            {
-                title: 'Example Search Result 3',
-                url: 'https://www.example.com/3',
-                snippet: 'This is a description for the third example search result.',
-            },
-        ];
-
-        setSearchResults(mockResults);
     };
 
     return (
@@ -96,50 +106,27 @@ export default function Example1() {
                 </ul>
             </div>
             <div className="container2">
-                <h3>Internet Search</h3>
-                <form onSubmit={handleSearchSubmit}>
+                <h3>Search Form</h3>
+                <form>
                     <label htmlFor="search">Search:</label>
-                    <input
-                        type="text"
-                        id="search"
-                        name="search"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        placeholder="Search the web..."
-                    />
+                    <input type="text" id="search" name="search" placeholder="Search..." />
                     <br />
-                    <button type="submit">Search</button>
+                    <label htmlFor="filter">Filter:</label>
+                    <input type="text" id="filter" name="filter" placeholder="Filter..." />
+                    <br />
+                    <button type="submit">Submit</button>
                 </form>
-                <div className="search-results">
-                    <h4>Search Results</h4>
-                    {searchResults.length > 0 ? (
-                        <ul>
-                            {searchResults.map((result, index) => (
-                                <li key={index}>
-                                    <a href={result.url} target="_blank" rel="noopener noreferrer">
-                                        {result.title}
-                                    </a>
-                                    <p>{result.snippet}</p>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No results found. Try searching for something else.</p>
-                    )}
-                </div>
             </div>
             <div className="container3">
-                <div className="framed-content">
-                    <h3>Chapter Content</h3>
-                    {selectedChapter ? (
-                        <div>
-                            <h4>{selectedChapter}</h4>
-                            <p>{chapterContents[selectedChapter]}</p>
-                        </div>
-                    ) : (
-                        <p>Please select a chapter from the list to view its content.</p>
-                    )}
-                </div>
+                <h3>Chapter Content</h3>
+                {selectedChapter ? (
+                    <div className="framed-content">
+                        <h4>{selectedChapter}</h4>
+                        <p>This is the content for {selectedChapter}. Here, you can add more details, examples, or any other relevant information.</p>
+                    </div>
+                ) : (
+                    <p>Please select a chapter from the list to view its content.</p>
+                )}
             </div>
         </div>
     );
