@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import '../ResizableColumns.css';
+import { chapters, chapterContents } from '../content/ChaptersContent';
 
 export default function Example1() {
     const [selectedChapter, setSelectedChapter] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const setInitialWidths = () => {
@@ -47,15 +50,37 @@ export default function Example1() {
         };
     }, []);
 
-    const chapters = [
-        'Chapter 1: Introduction',
-        'Chapter 2: Getting Started',
-        'Chapter 3: Advanced Topics',
-        'Chapter 4: Conclusion'
-    ];
-
     const handleChapterClick = (chapter) => {
         setSelectedChapter(chapter);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+
+        // Hardcoded mock search results
+        const mockResults = [
+            {
+                title: 'Example Search Result 1',
+                url: 'https://www.example.com/1',
+                snippet: 'This is a description for the first example search result.',
+            },
+            {
+                title: 'Example Search Result 2',
+                url: 'https://www.example.com/2',
+                snippet: 'This is a description for the second example search result.',
+            },
+            {
+                title: 'Example Search Result 3',
+                url: 'https://www.example.com/3',
+                snippet: 'This is a description for the third example search result.',
+            },
+        ];
+
+        setSearchResults(mockResults);
     };
 
     return (
@@ -71,27 +96,50 @@ export default function Example1() {
                 </ul>
             </div>
             <div className="container2">
-                <h3>Search Form</h3>
-                <form>
+                <h3>Internet Search</h3>
+                <form onSubmit={handleSearchSubmit}>
                     <label htmlFor="search">Search:</label>
-                    <input type="text" id="search" name="search" placeholder="Search..." />
+                    <input
+                        type="text"
+                        id="search"
+                        name="search"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        placeholder="Search the web..."
+                    />
                     <br />
-                    <label htmlFor="filter">Filter:</label>
-                    <input type="text" id="filter" name="filter" placeholder="Filter..." />
-                    <br />
-                    <button type="submit">Submit</button>
+                    <button type="submit">Search</button>
                 </form>
+                <div className="search-results">
+                    <h4>Search Results</h4>
+                    {searchResults.length > 0 ? (
+                        <ul>
+                            {searchResults.map((result, index) => (
+                                <li key={index}>
+                                    <a href={result.url} target="_blank" rel="noopener noreferrer">
+                                        {result.title}
+                                    </a>
+                                    <p>{result.snippet}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No results found. Try searching for something else.</p>
+                    )}
+                </div>
             </div>
             <div className="container3">
-                <h3>Chapter Content</h3>
-                {selectedChapter ? (
-                    <div>
-                        <h4>{selectedChapter}</h4>
-                        <p>This is the content for {selectedChapter}. Here, you can add more details, examples, or any other relevant information.</p>
-                    </div>
-                ) : (
-                    <p>Please select a chapter from the list to view its content.</p>
-                )}
+                <div className="framed-content">
+                    <h3>Chapter Content</h3>
+                    {selectedChapter ? (
+                        <div>
+                            <h4>{selectedChapter}</h4>
+                            <p>{chapterContents[selectedChapter]}</p>
+                        </div>
+                    ) : (
+                        <p>Please select a chapter from the list to view its content.</p>
+                    )}
+                </div>
             </div>
         </div>
     );

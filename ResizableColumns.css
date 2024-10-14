@@ -13,7 +13,7 @@ html, body {
   display: flex;
   width: 100vw;
   height: 100vh;
-  margin: 0;
+  margin: 70px 0 0 0;
   padding: 0;
   box-sizing: border-box;
   overflow: hidden;
@@ -21,12 +21,13 @@ html, body {
 
 /* First container (Chapters list) */
 .container1 {
-  background-color: #ff9999;
+  background-color: rgb(167, 115, 24);
   width: 25%;
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
   overflow-y: auto;
+  min-width: 200px;
 }
 
 .container1 h3 {
@@ -34,8 +35,9 @@ html, body {
 }
 
 .container1 ul {
+  background-color: rgb(167, 115, 24);
   list-style-type: none;
-  padding: 0;
+  padding: 15px;
 }
 
 .container1 li {
@@ -50,12 +52,13 @@ html, body {
 
 /* Second container (Search form) */
 .container2 {
-  background-color: #99ccff;
+  background-color: #c89d10;
   width: 25%;
   height: 100%;
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
+  min-width: 200px;
 }
 
 .container2 h3 {
@@ -76,11 +79,13 @@ html, body {
 
 /* Third container (Chapter content) */
 .container3 {
-  background-color: #99ff99;
+  background-color: #11032e;
   height: 100%;
-  padding: 20px;
+  padding: 50px;
   box-sizing: border-box;
   overflow-y: auto;
+  color:beige;
+  min-width: 500px;
 }
 
 .container3 h3, .container3 h4 {
@@ -95,6 +100,53 @@ html, body {
   top: 0;
   right: 0;
   bottom: 0;
+}
+
+/* Framed content inside container3 */
+.framed-content {
+  border: 15px solid gray;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f4f4ed; /* Optional: different background for the framed content */
+  height: 100%;
+  overflow-y: auto;
+  color: #11032e;
+  border-radius: 10px;
+  max-height: 500px;
+  
+}
+
+.search-results {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-results ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-results li {
+  margin-bottom: 15px;
+}
+
+.search-results a {
+  color: #0073e6;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.search-results a:hover {
+  text-decoration: underline;
+}
+
+.search-results p {
+  margin: 5px 0 0 0;
+  color: #333;
 }
 
   
