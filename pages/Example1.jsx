@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import '../ResizableColumns.css';
 import { chapters, chapterContents } from '../content/ChaptersContent';
+import { useEffect, useState } from 'react';
 
 export default function Example1() {
     const [selectedChapter, setSelectedChapter] = useState(null);
@@ -60,6 +61,14 @@ export default function Example1() {
                     const remainingWidth = window.$('.container-main').width() - container1Width - container2Width;
                     window.$('.container3').width(remainingWidth);
                 },
+            });
+
+            // Make the new element draggable and resizable
+            window.$('.draggable-resizable').draggable({
+                containment: 'window'
+            }).resizable({
+                minWidth: 50,
+                minHeight: 50
             });
         } else {
             console.error('jQuery UI resizable is not available.');
@@ -138,6 +147,19 @@ export default function Example1() {
                 ) : (
                     <p>Please select a chapter from the list to view its content.</p>
                 )}
+            </div>
+            <div
+                className="draggable-resizable"
+                style={{
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    width: '150px',
+                    height: '150px',
+                    backgroundColor: 'orange'
+                }}
+            >
+                <h4>Draggable and Resizable Element</h4>
             </div>
         </div>
     );
