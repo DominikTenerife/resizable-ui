@@ -77,18 +77,7 @@ export default function Example1() {
         };
     }, []);
 
-    const chapters = [
-        'Chapter 1: Introduction',
-        'Chapter 2: Getting Started',
-        'Chapter 3: Advanced Topics',
-        'Chapter 4: Conclusion',
-        'Chapter 5: Additional Topics',
-        'Chapter 6: Best Practices',
-        'Chapter 7: Troubleshooting',
-        'Chapter 8: Case Studies',
-        'Chapter 9: Further Reading',
-        'Chapter 10: Final Thoughts'
-    ];
+   
 
     const handleChapterClick = (chapter) => {
         setSelectedChapter(chapter);
@@ -145,7 +134,7 @@ export default function Example1() {
                 {selectedChapter ? (
                     <div className="framed-content">
                         <h4>{selectedChapter}</h4>
-                        <p>This is the content for {selectedChapter}. Here, you can add more details, examples, or any other relevant information.</p>
+                        <p>{chapterContents[selectedChapter]}</p>
                     </div>
                 ) : (
                     <p>Please select a chapter from the list to view its content.</p>
