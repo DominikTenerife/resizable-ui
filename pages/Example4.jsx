@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../ResizableColumns.css';
+import styles from '../Example4.module.css';
 import { chapters, chapterContents } from '../content/ChaptersContent';
 
 export default function Example4() {
@@ -46,6 +46,7 @@ export default function Example4() {
                 animate: true,
                 helper: "ui-resizable-helper",
                 resize: function (event, ui) {
+                    ui.helper.css('border', '2px dotted blue');
                     const container1Width = ui.size.width;
                     const container2Width = window.$('.container2').width();
                     const remainingWidth = window.$('.container-main').width() - container1Width - container2Width;
@@ -58,6 +59,7 @@ export default function Example4() {
                 animate: true,
                 helper: "ui-resizable-helper",
                 resize: function (event, ui) {
+                    ui.helper.css('border', '2px dotted blue');
                     const container1Width = window.$('.container1').width();
                     const container2Width = ui.size.width;
                     const remainingWidth = window.$('.container-main').width() - container1Width - container2Width;

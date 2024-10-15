@@ -1,4 +1,4 @@
-/* ResizableColumns.css */
+/* Example4.module.css */
 html, body {
     margin: 0;
     padding: 0;
@@ -151,10 +151,8 @@ html, body {
     margin: 5px 0 0 0;
     color: #333;
   }
-
- 
   
- 
+  .ui-resizable-helper { border: 2px dotted #00F !important; }
   
   
    /* Media query for tablets (768px to 1024px) */
@@ -174,3 +172,4 @@ html, body {
     }
   } 
   
+    
