@@ -106,3 +106,8 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
+/* Highlight active chapter */
+.activechapter {
+  background-color: rgb(209, 174, 19);
+}

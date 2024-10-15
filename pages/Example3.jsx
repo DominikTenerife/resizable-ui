@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import '../Resizable2.css';
+import '../ResizableColumns.css';
 import { chapters, chapterContents } from '../content/ChaptersContent';
 
 export default function Example3() {
@@ -100,11 +100,15 @@ export default function Example3() {
 
     return (
         <div className="container-main">
-            <div className="container1">
+             <div className="container1">
                 <h3>Chapters</h3>
                 <ul>
                     {chapters.map((chapter, index) => (
-                        <li key={index} onClick={() => handleChapterClick(chapter)}>
+                        <li
+                            key={index}
+                            onClick={() => handleChapterClick(chapter)}
+                            className={selectedChapter === chapter ? 'activechapter' : ''}
+                        >
                             {chapter}
                         </li>
                     ))}

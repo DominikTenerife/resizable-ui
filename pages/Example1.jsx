@@ -7,6 +7,7 @@ export default function Example1() {
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
+        // Set initial widths and add resizing functionality as before
         const setInitialWidths = () => {
             const container1Width = window.$('.container1').width();
             const container2Width = window.$('.container2').width();
@@ -64,7 +65,6 @@ export default function Example1() {
             console.error('jQuery UI resizable is not available.');
         }
 
-        // Adding touch event listeners for resizing
         window.$('.container1').on('touchstart', (e) => handleTouchResize('.container1', e));
         window.$('.container2').on('touchstart', (e) => handleTouchResize('.container2', e));
 
@@ -77,15 +77,12 @@ export default function Example1() {
         };
     }, []);
 
-   
-
     const handleChapterClick = (chapter) => {
         setSelectedChapter(chapter);
     };
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        // Mock search results for demonstration purposes
         setSearchResults([
             { title: 'Mock Result 1', url: 'https://example.com/1', description: 'This is a description for mock result 1.' },
             { title: 'Mock Result 2', url: 'https://example.com/2', description: 'This is a description for mock result 2.' },
@@ -99,7 +96,11 @@ export default function Example1() {
                 <h3>Chapters</h3>
                 <ul>
                     {chapters.map((chapter, index) => (
-                        <li key={index} onClick={() => handleChapterClick(chapter)}>
+                        <li
+                            key={index}
+                            onClick={() => handleChapterClick(chapter)}
+                            className={selectedChapter === chapter ? 'activechapter' : ''}
+                        >
                             {chapter}
                         </li>
                     ))}
@@ -110,8 +111,6 @@ export default function Example1() {
                 <form onSubmit={handleSearchSubmit}>
                     <label htmlFor="search">Search:</label>
                     <input type="text" id="search" name="search" placeholder="Search..." />
-                    <br />
-                   
                     <br />
                     <button type="submit">Submit</button>
                 </form>
