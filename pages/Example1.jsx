@@ -6,7 +6,7 @@ export default function Example1() {
     const [selectedChapter, setSelectedChapter] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
     
-    // Track the drag and resize states
+    // Track the drag state
     const [isDragging, setIsDragging] = useState(false);
     const [isResizing, setIsResizing] = useState(false);
     const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
@@ -23,13 +23,75 @@ export default function Example1() {
             window.$('.container3').width(remainingWidth);
         };
 
-        const handleTouchResize = (event) => {
-            const target = event.target.closest('.resizer');
-            if (target) {
-                setIsResizing(true);
-                setInitialPos({ x: event.touches[0].clientX, y: event.touches[0].clientY });
-                const rect = target.parentElement.getBoundingClientRect();
-                setInitialSize({ width: rect.width, height: rect.height });
+        const handleTouchResize = (container, event) => {
+            let startX = event.touches[0].clientX;
+            const initialWidth = window.$(container).width();
+
+            const onTouchMove = (e) => {
+                const currentX = e.touches[0].clientX;
+                const delta = currentX - startX;
+                const newWidth = initialWidth + delta;
+
+                window.$(container).width(newWidth);
+                setInitialWidths();
+            };
+
+            const onTouchEnd = () => {
+                window.removeEventListener('touchmove', onTouchMove);
+                window.removeEventListener('touchend', onTouchEnd);
+            };
+
+            window.addEventListener('touchmove', onTouchMove);
+            window.addEventListener('touchend', onTouchEnd);
+        };
+
+        setInitialWidths();
+
+        if (typeof window.$.fn.resizable === 'function') {
+            window.$('.container1').resizable({
+                handles: 'e',
+                resize: function (event, ui) {
+                    const container1Width = ui.size.width;
+                    const container2Width = window.$('.container2').width();
+                    const remainingWidth = window.$('.container-main').width() - container1Width - container2Width;
+                    window.$('.container3').width(remainingWidth);
+                },
+            });
+
+            window.$('.container2').resizable({
+                handles: 'e',
+                resize: function (event, ui) {
+                    const container1Width = window.$('.container1').width();
+                    const container2Width = ui.size.width;
+                    const remainingWidth = window.$('.container-main').width() - container1Width - container2Width;
+                    window.$('.container3').width(remainingWidth);
+                },
+            });
+
+            // Make the new element draggable and resizable
+            window.$('.draggable-resizable').draggable({
+                containment: 'window'
+            }).resizable({
+                minWidth: 50,
+                minHeight: 50
+            });
+        } else {
+            console.error('jQuery UI resizable is not available.');
+        }
+
+        window.$('.container1').on('touchstart', (e) => handleTouchResize('.container1', e));
+        window.$('.container2').on('touchstart', (e) => handleTouchResize('.container2', e));
+
+        // Handle touch events for the draggable-resizable element
+        const handleTouchStart = (e) => {
+            if (e.touches.length === 1) {
+                setIsDragging(true);
+                setInitialPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+                const rect = e.currentTarget.getBoundingClientRect();
+                setOffset({
+                    top: rect.top,
+                    left: rect.left,
+                });
             }
         };
 
@@ -41,40 +103,16 @@ export default function Example1() {
                 e.currentTarget.style.top = `${offset.top + dy}px`;
                 e.currentTarget.style.left = `${offset.left + dx}px`;
                 e.currentTarget.style.position = 'fixed';
-            } else if (isResizing) {
-                const dx = e.touches[0].clientX - initialPos.x;
-                const dy = e.touches[0].clientY - initialPos.y;
-
-                const newWidth = Math.max(50, initialSize.width + dx);
-                const newHeight = Math.max(50, initialSize.height + dy);
-                
-                const resizableElement = e.currentTarget.parentElement;
-                resizableElement.style.width = `${newWidth}px`;
-                resizableElement.style.height = `${newHeight}px`;
             }
         };
 
         const handleTouchEnd = () => {
             setIsDragging(false);
-            setIsResizing(false);
         };
 
-        // Make the new element draggable and resizable
+        // Attach touch event listeners
         const draggableElement = window.$('.draggable-resizable');
-        draggableElement.draggable({
-            containment: 'window'
-        }).resizable({
-            minWidth: 50,
-            minHeight: 50
-        });
-
-        // Attach touch event listeners for dragging and resizing
-        draggableElement.on('touchstart', (e) => {
-            if (e.touches.length === 1) {
-                handleTouchResize(e);
-            }
-        });
-
+        draggableElement.on('touchstart', handleTouchStart);
         draggableElement.on('touchmove', handleTouchMove);
         draggableElement.on('touchend', handleTouchEnd);
 
@@ -82,11 +120,13 @@ export default function Example1() {
 
         return () => {
             window.removeEventListener('resize', setInitialWidths);
+            window.$('.container1').off('touchstart');
+            window.$('.container2').off('touchstart');
             draggableElement.off('touchstart');
             draggableElement.off('touchmove');
             draggableElement.off('touchend');
         };
-    }, [isDragging, initialPos, offset, isResizing, initialSize]);
+    }, [isDragging, initialPos, offset]);
 
     const handleChapterClick = (chapter) => {
         setSelectedChapter(chapter);
@@ -163,19 +203,6 @@ export default function Example1() {
                 }}
             >
                 <h4>Draggable and Resizable Element</h4>
-                <div
-                    className="resizer"
-                    style={{
-                        width: '10px',
-                        height: '10px',
-                        backgroundColor: 'black',
-                        position: 'absolute',
-                        right: 0,
-                        bottom: 0,
-                        cursor: 'nwse-resize',
-                        touchAction: 'none', // Prevent default touch actions
-                    }}
-                />
             </div>
         </div>
     );
