@@ -63,7 +63,7 @@ header {
 header a:hover {
   color:lightblue;
   text-decoration: underline;
-  text-decoration-color: blue;
+  text-decoration-color: rgb(104, 96, 40);
   text-decoration-thickness: 5px;
   
 }
@@ -85,6 +85,8 @@ footer {
   justify-content: center;
   align-items: center;
   width: 100%;
+  z-index: +1;
+  border-top: 2px solid rgb(178, 192, 24);
 }
 
 /* This will explicitly force no unintended padding or margin */
@@ -92,4 +94,15 @@ footer {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.home-container {
+  margin: 0;
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+  color: whitesmoke;
+  justify-content: center;
+  align-items: center;
 }
