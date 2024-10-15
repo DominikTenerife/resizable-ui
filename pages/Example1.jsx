@@ -1,14 +1,19 @@
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../ResizableColumns.css';
 import { chapters, chapterContents } from '../content/ChaptersContent';
-import { useEffect, useState } from 'react';
 
 export default function Example1() {
     const [selectedChapter, setSelectedChapter] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
+    
+    // Track the drag state
+    const [isDragging, setIsDragging] = useState(false);
+    const [isResizing, setIsResizing] = useState(false);
+    const [initialPos, setInitialPos] = useState({ x: 0, y: 0 });
+    const [initialSize, setInitialSize] = useState({ width: 150, height: 150 });
+    const [offset, setOffset] = useState({ top: 0, left: 0 });
 
     useEffect(() => {
-        // Set initial widths and add resizing functionality as before
         const setInitialWidths = () => {
             const container1Width = window.$('.container1').width();
             const container2Width = window.$('.container2').width();
@@ -77,14 +82,51 @@ export default function Example1() {
         window.$('.container1').on('touchstart', (e) => handleTouchResize('.container1', e));
         window.$('.container2').on('touchstart', (e) => handleTouchResize('.container2', e));
 
+        // Handle touch events for the draggable-resizable element
+        const handleTouchStart = (e) => {
+            if (e.touches.length === 1) {
+                setIsDragging(true);
+                setInitialPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+                const rect = e.currentTarget.getBoundingClientRect();
+                setOffset({
+                    top: rect.top,
+                    left: rect.left,
+                });
+            }
+        };
+
+        const handleTouchMove = (e) => {
+            if (isDragging) {
+                const dx = e.touches[0].clientX - initialPos.x;
+                const dy = e.touches[0].clientY - initialPos.y;
+
+                e.currentTarget.style.top = `${offset.top + dy}px`;
+                e.currentTarget.style.left = `${offset.left + dx}px`;
+                e.currentTarget.style.position = 'fixed';
+            }
+        };
+
+        const handleTouchEnd = () => {
+            setIsDragging(false);
+        };
+
+        // Attach touch event listeners
+        const draggableElement = window.$('.draggable-resizable');
+        draggableElement.on('touchstart', handleTouchStart);
+        draggableElement.on('touchmove', handleTouchMove);
+        draggableElement.on('touchend', handleTouchEnd);
+
         window.addEventListener('resize', setInitialWidths);
 
         return () => {
             window.removeEventListener('resize', setInitialWidths);
             window.$('.container1').off('touchstart');
             window.$('.container2').off('touchstart');
+            draggableElement.off('touchstart');
+            draggableElement.off('touchmove');
+            draggableElement.off('touchend');
         };
-    }, []);
+    }, [isDragging, initialPos, offset]);
 
     const handleChapterClick = (chapter) => {
         setSelectedChapter(chapter);
@@ -156,7 +198,8 @@ export default function Example1() {
                     left: 0,
                     width: '150px',
                     height: '150px',
-                    backgroundColor: 'orange'
+                    backgroundColor: 'orange',
+                    touchAction: 'none', // Prevent default touch actions
                 }}
             >
                 <h4>Draggable and Resizable Element</h4>
