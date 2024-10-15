@@ -152,6 +152,8 @@ html, body {
   color: #333;
 }
 
+.ui-resizable-helper { border: 2px dotted #00F; }
+
 
  /* Media query for tablets (768px to 1024px) */
 @media (max-width: 1024px) and (min-width: 768px) {

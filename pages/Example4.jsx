@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import '../Resizable2.css';
+import '../ResizableColumns.css';
 import { chapters, chapterContents } from '../content/ChaptersContent';
 
-export default function Example2() {
+export default function Example4() {
     const [selectedChapter, setSelectedChapter] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
 
@@ -44,7 +44,7 @@ export default function Example2() {
             window.$('.container1').resizable({
                 handles: 'e',
                 animate: true,
-                helper: false,
+                helper: "ui-resizable-helper",
                 resize: function (event, ui) {
                     const container1Width = ui.size.width;
                     const container2Width = window.$('.container2').width();
@@ -56,7 +56,7 @@ export default function Example2() {
             window.$('.container2').resizable({
                 handles: 'e',
                 animate: true,
-                helper: false,
+                helper: "ui-resizable-helper",
                 resize: function (event, ui) {
                     const container1Width = window.$('.container1').width();
                     const container2Width = ui.size.width;
@@ -96,7 +96,6 @@ export default function Example2() {
             { title: 'Mock Result 3', url: 'https://example.com/3', description: 'This is a description for mock result 3.' }
         ]);
     };
-;
 
     return (
         <div className="container-main">

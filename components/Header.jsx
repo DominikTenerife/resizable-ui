@@ -9,17 +9,22 @@ export default function Header() {
                 <NavLink
                     to="/example1"
                 >
-                    Example1
+                    Standard
                 </NavLink>
                 <NavLink
                     to="/example2"
                 >
-                    Example2
+                    Animate
                 </NavLink>
                 <NavLink
                     to="/example3"
                 >
-                    Example3
+                    Ghost
+                </NavLink>
+                <NavLink
+                    to="/example4"
+                >
+                    Helper
                 </NavLink>
             </nav>
 
